@@ -5,7 +5,7 @@
 
   Example:
 
-    if (glob_match("hello*", arg)) ...
+    if (glob::match("hello*", arg)) ...
 */
 
 /*
@@ -35,12 +35,19 @@
  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#pragma once
+#ifndef LIBIMREAD_INCLUDE_EXT_GLOB_HH_
+#define LIBIMREAD_INCLUDE_EXT_GLOB_HH_
 
 #include <experimental/string_view>
 
-bool glob_match(std::experimental::string_view pattern,
+namespace glob {
+    
+    bool match(std::experimental::string_view pattern,
+               std::experimental::string_view target);
+    
+    bool imatch(std::experimental::string_view pattern,
                 std::experimental::string_view target);
 
-bool glob_match_caseless(std::experimental::string_view pattern,
-                         std::experimental::string_view target);
+}
+
+#endif /// LIBIMREAD_INCLUDE_EXT_GLOB_HH_
