@@ -29,7 +29,7 @@
  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#include "glob_match.hpp"
+#include "glob.hh"
 #include <cstdlib>
 #include <iostream>
 
@@ -41,34 +41,34 @@
   }                                                                     \
 } while (0)
 
-int main()
-{
+int main() {
   bool pass = true;
 
-  EXPECT(glob_match("hello", "hello"));
-  EXPECT(!glob_match("hello", "hello!"));
-  EXPECT(!glob_match("hello", "hi"));
+  EXPECT(glob::match("hello", "hello"));
+  EXPECT(!glob::match("hello", "hello!"));
+  EXPECT(!glob::match("hello", "hi"));
 
-  EXPECT(glob_match("he?lo", "hello"));
-  EXPECT(glob_match("h*o", "hello"));
-  EXPECT(glob_match("h******o", "hello"));
-  EXPECT(glob_match("h***?***o", "hello"));
-  EXPECT(glob_match("*o", "hello"));
-  EXPECT(glob_match("h*", "hello"));
+  EXPECT(glob::match("he?lo", "hello"));
+  EXPECT(glob::match("h*o", "hello"));
+  EXPECT(glob::match("h******o", "hello"));
+  EXPECT(glob::match("h***?***o", "hello"));
+  EXPECT(glob::match("*o", "hello"));
+  EXPECT(glob::match("h*", "hello"));
 
-  EXPECT(!glob_match("", "hello"));
-  EXPECT(glob_match("", ""));
-  EXPECT(glob_match("*", ""));
-  EXPECT(glob_match("*", "hello"));
-  EXPECT(!glob_match("?", ""));
+  EXPECT(!glob::match("", "hello"));
+  EXPECT(glob::match("", ""));
+  EXPECT(glob::match("*", ""));
+  EXPECT(glob::match("*", "hello"));
+  EXPECT(!glob::match("?", ""));
 
-  EXPECT(glob_match(std::string("h***?***o"), std::string("hello")));
+  EXPECT(glob::match(std::string("h***?***o"), std::string("hello")));
 
-  EXPECT(!glob_match("hello", "HELLO"));
-  EXPECT(glob_match_caseless("hello", "HELLO"));
-  EXPECT(glob_match_caseless("h*L?", "hello"));
-  EXPECT(!glob_match("h*L?", "hello"));
+  EXPECT(!glob::match("hello", "HELLO"));
+  EXPECT(glob::imatch("hello", "HELLO"));
+  EXPECT(glob::imatch("h*L?", "hello"));
+  EXPECT(!glob::match("h*L?", "hello"));
 
   std::cout << (pass ? "pass" : "fail") << '\n';
+  
   return pass ? EXIT_SUCCESS : EXIT_FAILURE;
 }
